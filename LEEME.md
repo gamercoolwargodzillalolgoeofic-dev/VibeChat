@@ -34,4 +34,4 @@
    ```
 8. Abre http://localhost:5173
 
-Hecho con cariño por warIACreator.
+una URL rara pero la quise llamar asi :/                                                                                                                                                  con cariño WarIACreator
