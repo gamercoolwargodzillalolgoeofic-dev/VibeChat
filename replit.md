@@ -1,0 +1,37 @@
+# Vibe Chat
+
+Aplicación web de chat con IA en español, gratuita y al estilo ChatGPT, llamada **Vibe Chat**. Ayuda a los usuarios con programación y conversación general.
+
+## Stack
+
+- Monorepo `pnpm` con artefactos en `artifacts/`.
+- **Frontend** (`artifacts/ai-chat`): React + Vite + Tailwind + shadcn/ui + wouter + react-query + framer-motion + react-markdown + react-syntax-highlighter + next-themes.
+- **Backend** (`artifacts/api-server`): Express + Drizzle ORM (PostgreSQL) + integración OpenAI vía `@workspace/integrations-openai-ai-server` (proxy de Replit AI Integrations).
+- **Datos** (`lib/db`): tablas `conversations` (id, title, model, createdAt) y `messages` (id, conversationId, role, content, createdAt).
+- **Spec** (`lib/api-spec/openapi.yaml`) genera hooks tipados (`@workspace/api-client-react`) y validadores Zod (`@workspace/api-zod`).
+
+## Funcionalidades
+
+- Lista de conversaciones en barra lateral con eliminar al hover y modo claro/oscuro.
+- Vista vacía con prompts de ejemplo y selector de modelo (Vibe Pro/Rápido/Flash/Razona = gpt-5.4 / gpt-5-mini / gpt-5-nano / o4-mini).
+- Composer con textarea autoexpandible, Enter para enviar, Shift+Enter para nueva línea.
+- Streaming de respuestas vía SSE (endpoint `/api/openai/conversations/:id/messages`), con cursor parpadeante mientras llegan tokens.
+- Renderizado de markdown con bloques de código resaltados y botón "copiar".
+- Auto-actualización del título de la conversación a partir del primer mensaje del usuario.
+- Persistencia completa: refrescar la página recupera la conversación.
+
+## Variables de entorno
+
+- `DATABASE_URL` (PostgreSQL Replit).
+- `AI_INTEGRATIONS_OPENAI_BASE_URL`, `AI_INTEGRATIONS_OPENAI_API_KEY` (Replit AI Integrations - OpenAI).
+- `SESSION_SECRET` (reservado).
+
+## Comandos comunes
+
+- `pnpm --filter @workspace/db run push` — aplicar cambios de esquema.
+- `pnpm --filter @workspace/api-spec run codegen` — regenerar hooks/Zod tras editar `openapi.yaml`.
+
+## Notas técnicas
+
+- Modelos `gpt-5*` y `o4-mini` requieren `max_completion_tokens` (no `max_tokens`) y no aceptan `temperature` personalizada.
+- El frontend construye URLs con `import.meta.env.BASE_URL` para respetar el prefijo del artefacto.
