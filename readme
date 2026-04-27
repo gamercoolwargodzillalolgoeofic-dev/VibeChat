@@ -23,7 +23,7 @@ Aplicación web de chat con IA en español, gratuita y al estilo ChatGPT, llamad
 ## Variables de entorno
 
 - `DATABASE_URL` (PostgreSQL Replit).
-- `AI_INTEGRATIONS_OPENAI_BASE_URL`, `AI_INTEGRATIONS_OPENAI_API_KEY` (Replit AI Integrations - OpenAI).
+- `AI_INTEGRATIONS_OPENAI_BASE_URL`, `AI_INTEGRATIONS_OPENAI_API_KEY` (Vibechat Integrations - OpenAI).
 - `SESSION_SECRET` (reservado).
 
 ## Comandos comunes
